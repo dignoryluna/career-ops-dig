@@ -1,0 +1,356 @@
+# Portal Scanner Configuration
+# Used by /career-ops scan to discover new offers automatically.
+#
+# Strategy (3 levels):
+#   1. Playwright → careers_url of each company (real-time, reliable)
+#   2. Greenhouse API → structured JSON (fast, Greenhouse-only)
+#   3. WebSearch with site: filters (broad discovery, may be stale)
+#
+# IMPORTANT: Each company in tracked_companies MUST have careers_url.
+#   Prefer the BRANDED company careers URL whenever available; use ATS-hosted URL only as fallback.
+#   ✅ https://careers.mastercard.com   ⚠️ https://mastercard.wd1.myworkdayjobs.com (fallback only)
+#   ✅ https://openai.com/careers       ⚠️ https://job-boards.greenhouse.io/openai (fallback only)
+#   Exception: ATS-hosted careers_url is acceptable when no branded careers page exists.
+#   Using raw ATS URLs when a branded page exists can cause false 410 errors (job ID mismatch).
+#
+# HOW TO CUSTOMIZE:
+#   1. Copy this file to portals.yml in the project root
+#   2. Edit title_filter.positive with YOUR target role keywords
+#   3. Add/remove companies in tracked_companies
+#   4. Adjust search_queries for your preferred job boards
+#   5. Set enabled: false on companies you don't care about
+
+# -- Title filter --
+# The scanner uses these keywords to decide if a title is relevant.
+# At least 1 positive must match AND 0 negatives must match (case-insensitive).
+
+title_filter:
+  positive:
+    # -- AI Ops (primary target) --
+    - "AI Ops"
+    - "AI Operations"
+    - "AI Project Manager"
+    - "AI Program Manager"
+    - "AI Workflow"
+    - "Automation Specialist"
+    - "Automation Manager"
+    - "Automation Lead"
+    - "AI Tools"
+    - "AI Implementation"
+    # -- Strategic ops / leadership --
+    - "Head of Operations"
+    - "Director of Operations"
+    - "VP of Operations"
+    - "Fractional COO"
+    - "Chief of Staff"
+    - "Business Operations"
+    - "Biz Ops"
+    - "BizOps"
+    - "Ops Lead"
+    # -- Project / Program --
+    - "Project Manager"
+    - "Program Manager"
+    - "Operations Manager"
+    - "Ops Manager"
+    # -- Workflow / systems --
+    - "Workflow"
+    - "Process Improvement"
+    - "Systems"
+    - "No-Code"
+    - "Low-Code"
+    - "RevOps"
+  negative:
+    - "Junior"
+    - "Intern"
+    - "On-site"
+    - "On site"
+    - "In-office"
+    - "In office"
+    - "Executive Assistant"
+    - "Virtual Assistant"
+    - "Admin Assistant"
+    - "Administrative Assistant"
+    - "Engineer"
+    - "Developer"
+    - "Software"
+    - ".NET"
+    - "Java "
+    - "iOS"
+    - "Android"
+    - "PHP"
+    - "Ruby"
+    - "Embedded"
+    - "Firmware"
+    - "FPGA"
+    - "ASIC"
+    - "Blockchain"
+    - "Web3"
+    - "Crypto"
+    - "Salesforce Admin"
+    - "SAP "
+    - "Oracle EBS"
+    - "Mainframe"
+    - "COBOL"
+  seniority_boost:
+    # These prefixes add relevance but are not required
+    - "Senior"
+    - "Staff"
+    - "Principal"
+    - "Lead"
+    - "Head"
+    - "Director"
+
+# -- Search queries --
+# Each query triggers a WebSearch. Use site: to filter by portal.
+# The scanner extracts title, URL, and company from results.
+
+search_queries:
+  # -- Ashby — AI Ops & Automation --
+  - name: Ashby — AI Ops Specialist
+    query: 'site:jobs.ashbyhq.com "AI Ops" OR "AI Operations" OR "AI Project Manager" OR "AI Program Manager" remote'
+    enabled: true
+
+  - name: Ashby — Automation Specialist
+    query: 'site:jobs.ashbyhq.com "Automation Specialist" OR "Automation Manager" OR "Automation Lead" OR "Workflow" remote'
+    enabled: true
+
+  - name: Ashby — Head of Ops / Chief of Staff
+    query: 'site:jobs.ashbyhq.com "Head of Operations" OR "Chief of Staff" OR "Director of Operations" OR "BizOps" remote'
+    enabled: true
+
+  - name: Ashby — No-Code & Process
+    query: 'site:jobs.ashbyhq.com "no-code" OR "low-code" OR "Notion" OR "Zapier" OR "Claude" operations OR ops remote'
+    enabled: true
+
+  # -- Greenhouse — AI Ops & Automation --
+  - name: Greenhouse — AI Ops
+    query: 'site:job-boards.greenhouse.io "AI Ops" OR "AI Operations" OR "AI Project Manager" OR "Automation Specialist" remote'
+    enabled: true
+
+  - name: Greenhouse — Head of Ops / CoS
+    query: 'site:job-boards.greenhouse.io "Head of Operations" OR "Chief of Staff" OR "Director of Operations" OR "Fractional COO" remote'
+    enabled: true
+
+  - name: Greenhouse — Business Operations
+    query: 'site:job-boards.greenhouse.io "Business Operations" OR "BizOps" OR "RevOps" OR "Ops Manager" AI OR startup remote'
+    enabled: true
+
+  # -- Workable --
+  - name: Workable — AI Ops & Automation
+    query: 'site:apply.workable.com "AI Operations" OR "Automation Specialist" OR "Head of Operations" OR "Chief of Staff" remote'
+    enabled: true
+
+  # -- Remote job boards --
+  - name: Remotive — Ops & Automation
+    query: 'site:remotive.com "Operations Manager" OR "Chief of Staff" OR "AI Ops" OR "Automation" OR "BizOps" remote'
+    enabled: true
+
+  - name: WeWorkRemotely — Ops & Management
+    query: 'site:weworkremotely.com "Operations Manager" OR "Chief of Staff" OR "Head of Operations" OR "Automation"'
+    enabled: true
+
+  - name: Working Nomads — Ops Roles
+    query: 'site:workingnomads.com "Operations Manager" OR "Chief of Staff" OR "AI Operations" OR "Automation Specialist"'
+    enabled: true
+
+  - name: RemoteOK — Ops & Automation
+    query: 'site:remoteok.com "Operations" OR "Chief of Staff" OR "Automation" OR "BizOps" remote'
+    enabled: true
+
+  - name: Himalayas — Ops & AI Ops
+    query: 'site:himalayas.app "Operations Manager" OR "Chief of Staff" OR "AI Ops" OR "Automation Specialist" remote'
+    enabled: true
+
+  # -- AI-specific job boards --
+  - name: ai-jobs.net — AI Ops & Ops roles
+    query: 'site:ai-jobs.net "Operations" OR "AI Ops" OR "Chief of Staff" OR "Automation" remote'
+    enabled: true
+
+  # -- YC / startup-focused --
+  - name: YC Jobs — Ops & CoS at AI startups
+    query: 'site:workatastartup.com "Operations" OR "Chief of Staff" OR "Head of Ops" OR "BizOps" remote'
+    enabled: true
+
+  # -- LATAM & global freelance/contract --
+  - name: Toptal — Ops & Automation freelance
+    query: 'site:toptal.com "Operations" OR "Chief of Staff" OR "Automation" OR "Project Manager" remote freelance'
+    enabled: true
+
+  - name: HN Who's Hiring — Ops & Automation
+    query: 'site:news.ycombinator.com "Operations" OR "Chief of Staff" OR "AI Ops" OR "Automation" remote'
+    enabled: true
+
+# -- Tracked companies --
+# Companies whose career pages are checked directly.
+# scan_method: playwright (default), websearch, greenhouse_api
+# For Greenhouse companies, add api: field for faster structured JSON access.
+# Focus: async-first, remote-friendly, AI-native or AI-adjacent, hire for ops roles.
+
+tracked_companies:
+
+  # -- Async-first / remote-first culture icons --
+
+  - name: Notion
+    careers_url: https://www.notion.so/careers
+    scan_method: websearch
+    scan_query: 'site:notion.so/careers "Operations" OR "Chief of Staff" OR "BizOps" OR "Project Manager"'
+    notes: "The tool you use. Async culture. Hires ops, CoS, and program manager roles."
+    enabled: true
+
+  - name: Linear
+    careers_url: https://jobs.ashbyhq.com/linear
+    scan_method: websearch
+    scan_query: 'site:jobs.ashbyhq.com/linear "Operations" OR "Chief of Staff" OR "Program Manager"'
+    notes: "Extremely async-first. No unnecessary meetings. Small, high-output team."
+    enabled: true
+
+  - name: Zapier
+    careers_url: https://jobs.ashbyhq.com/zapier
+    scan_method: websearch
+    scan_query: 'site:jobs.ashbyhq.com/zapier "Operations" OR "Chief of Staff" OR "Program Manager" OR "Ops"'
+    notes: "100% remote. Automation platform. Strong async culture and ops org."
+    enabled: true
+
+  - name: Doist
+    careers_url: https://doist.com/careers
+    scan_method: websearch
+    scan_query: 'site:doist.com/careers "Operations" OR "Chief of Staff" OR "Project Manager"'
+    notes: "Todoist/Twist. No-meeting culture pioneers. Async manifesto company."
+    enabled: true
+
+  - name: Loom
+    careers_url: https://job-boards.greenhouse.io/loom
+    api: https://boards-api.greenhouse.io/v1/boards/loom/jobs
+    notes: "Async video. Fully remote. Acquired by Atlassian but retains culture."
+    enabled: true
+
+  - name: Basecamp
+    careers_url: https://basecamp.com/about/jobs
+    scan_method: websearch
+    scan_query: 'site:basecamp.com/about/jobs "Operations" OR "Project Manager" OR "Coordinator"'
+    notes: "Legendary async-first culture. Remote work pioneers."
+    enabled: true
+
+  - name: Buffer
+    careers_url: https://buffer.com/journey
+    scan_method: websearch
+    scan_query: 'site:buffer.com/journey "Operations" OR "Chief of Staff" OR "Project Manager"'
+    notes: "Fully remote. Radical transparency. Small, values-driven team."
+    enabled: true
+
+  # -- AI-native ops platforms --
+
+  - name: Anthropic
+    careers_url: https://job-boards.greenhouse.io/anthropic
+    api: https://boards-api.greenhouse.io/v1/boards/anthropic/jobs
+    notes: "Claude maker. Hires ops, CoS, program managers. Mission-driven."
+    enabled: true
+
+  - name: Clay
+    careers_url: https://jobs.ashbyhq.com/claylabs
+    scan_method: websearch
+    scan_query: 'site:jobs.ashbyhq.com/claylabs "Operations" OR "Chief of Staff" OR "Ops" OR "Project Manager"'
+    notes: "AI-native GTM and workflow automation. Fast-growing, ops-heavy."
+    enabled: true
+
+  - name: Runway
+    careers_url: https://job-boards.greenhouse.io/runwayml
+    api: https://boards-api.greenhouse.io/v1/boards/runwayml/jobs
+    notes: "AI video/creative tools. Cool culture. Hires ops and program roles."
+    enabled: true
+
+  - name: Perplexity
+    careers_url: https://jobs.ashbyhq.com/perplexity
+    scan_method: websearch
+    scan_query: 'site:jobs.ashbyhq.com/perplexity "Operations" OR "Chief of Staff" OR "Program Manager"'
+    notes: "AI search. Fast-growing. Ops roles at scale."
+    enabled: true
+
+  - name: Harvey
+    careers_url: https://jobs.ashbyhq.com/harvey
+    scan_method: websearch
+    scan_query: 'site:jobs.ashbyhq.com/harvey "Operations" OR "Chief of Staff" OR "Project Manager"'
+    notes: "AI for legal. High-growth, async-friendly startup."
+    enabled: true
+
+  # -- Remote work / global ops platforms (LATAM-friendly) --
+
+  - name: Deel
+    careers_url: https://job-boards.greenhouse.io/deel
+    api: https://boards-api.greenhouse.io/v1/boards/deel/jobs
+    notes: "Global payroll & HR. Fully remote. LATAM-friendly. Hires ops roles globally."
+    enabled: true
+
+  - name: Remote.com
+    careers_url: https://job-boards.greenhouse.io/remotecom
+    api: https://boards-api.greenhouse.io/v1/boards/remotecom/jobs
+    notes: "Remote work infrastructure company. Fully distributed team. Ops-heavy."
+    enabled: true
+
+  - name: Rippling
+    careers_url: https://job-boards.greenhouse.io/rippling
+    api: https://boards-api.greenhouse.io/v1/boards/rippling/jobs
+    notes: "HR/ops platform. Fast-growing. BizOps and ops roles."
+    enabled: true
+
+  - name: Lattice
+    careers_url: https://job-boards.greenhouse.io/lattice
+    api: https://boards-api.greenhouse.io/v1/boards/lattice/jobs
+    notes: "People ops platform. Remote-friendly. Hires ops and CoS roles."
+    enabled: true
+
+  # -- Async collab / productivity tools --
+
+  - name: Miro
+    careers_url: https://job-boards.greenhouse.io/miro
+    api: https://boards-api.greenhouse.io/v1/boards/miro/jobs
+    notes: "Async visual collaboration. Distributed team. Program and ops roles."
+    enabled: true
+
+  - name: Coda
+    careers_url: https://jobs.lever.co/coda
+    notes: "Docs + automation platform. Remote-friendly. Ops and CoS roles."
+    enabled: true
+
+  - name: Typeform
+    careers_url: https://job-boards.greenhouse.io/typeform
+    api: https://boards-api.greenhouse.io/v1/boards/typeform/jobs
+    notes: "Barcelona / remote. Async culture. Ops and program manager roles."
+    enabled: true
+
+  - name: Webflow
+    careers_url: https://job-boards.greenhouse.io/webflow
+    api: https://boards-api.greenhouse.io/v1/boards/webflow/jobs
+    notes: "No-code web platform. Remote-first. BizOps and CoS roles."
+    enabled: true
+
+  # -- AI scheduling / automation tools --
+
+  - name: Reclaim.ai
+    careers_url: https://reclaim.ai/careers
+    scan_method: websearch
+    scan_query: '"reclaim.ai" careers "Operations" OR "Project Manager" OR "Chief of Staff"'
+    notes: "AI calendar automation. Small async team."
+    enabled: true
+
+  - name: Calendly
+    careers_url: https://job-boards.greenhouse.io/calendly
+    api: https://boards-api.greenhouse.io/v1/boards/calendly/jobs
+    notes: "Scheduling automation. Remote-friendly. Ops and program roles."
+    enabled: true
+
+  # -- Fully remote / distributed (async benchmark companies) --
+
+  - name: Automattic
+    careers_url: https://automattic.com/work-with-us
+    scan_method: websearch
+    scan_query: 'site:automattic.com/work-with-us "Operations" OR "Chief of Staff" OR "Project Manager"'
+    notes: "WordPress/Tumblr. 100% distributed since day one. Ultimate async culture."
+    enabled: true
+
+  - name: GitLab
+    careers_url: https://job-boards.greenhouse.io/gitlab
+    api: https://boards-api.greenhouse.io/v1/boards/gitlab/jobs
+    notes: "All-remote handbook company. Strong ops and CoS hiring. LATAM-friendly."
+    enabled: true
+

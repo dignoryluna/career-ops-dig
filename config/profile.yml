@@ -1,0 +1,74 @@
+# Career-Ops Profile Configuration
+# Copy this file to config/profile.yml and fill in your details.
+# This is the single source of truth for your personal data across all modes.
+
+candidate:
+  full_name: "Dignory Carmona"
+  email: "dignory.luna777@gmail.com"
+  phone: "+57 313 383 5407"
+  location: "Medellín, Colombia"
+  linkedin: "linkedin.com/in/dignoryluna"
+  # portfolio_url: ""
+  # github: ""
+  # canva_resume_design_id: "DAxxxxxxxxx"
+
+target_roles:
+  # Freelance/contract first. Full-time only at async, retreat-style, no-meeting-culture AI companies.
+  # Actively stepping away from EA/VA. Targeting AI Ops, automation, and strategic ops roles.
+  primary:
+    - "AI Ops Specialist"
+    - "Automation Specialist"
+    - "AI Project Manager"
+  archetypes:
+    - name: "AI Ops / Automation Specialist"
+      level: "Mid-Senior"
+      fit: "primary"        # primary = dream role, secondary = good fit, adjacent = stretch
+    - name: "Head of Operations / Fractional COO"
+      level: "Senior"
+      fit: "secondary"      # full-time only if company culture is exceptional
+    - name: "Chief of Staff"
+      level: "Mid-Senior"
+      fit: "adjacent"       # only at AI-native companies, not as glorified EA
+
+narrative:
+  headline: "AI Ops & Automation Specialist | ex-AI Fund (Andrew Ng) | EN/ES/FR | Remote"
+  exit_story: "3+ years in ops at AI Fund and GrowthX — not as a calendar manager, but as the person who built the systems, automated the workflows, and kept the machine running. Industrial Engineer background. Now focused on AI-native ops roles where I can build, not just support."
+  superpowers:
+    - "Workflow automation (Zapier, Notion, Claude)"
+    - "Ops systems design from scratch"
+    - "Stakeholder coordination across global, distributed teams"
+    - "Bilingual EN/ES + B1 French"
+    - "AI-adjacent environment experience (AI Fund, Andrew Ng)"
+  proof_points:
+    - name: "AI Fund — Andrew Ng's EA"
+      hero_metric: "Coordinated speaking engagements at major global conferences + 100-person ecosystem events"
+    - name: "Monadical — Tech Talk engagement"
+      hero_metric: "Increased participation from 20% to 40%+ through strategic coordination"
+  deal_breakers:
+    - "On-site required"
+    - "Meetings-heavy culture"
+    - "Traditional / old-school company"
+    - "No async-first communication norms"
+
+compensation:
+  freelance_monthly: "$3,000 USD/month"   # part-time / project-based baseline
+  hourly_rate: "$50 USD/hour"
+  currency: "USD"
+  full_time_note: "Open to full-time only at companies with strong async culture, team retreats, and no default-to-meeting norms"
+
+location:
+  country: "Colombia"
+  city: "Medellín"
+  timezone: "COT (UTC-5)"
+  visa_status: "No relocation. No sponsorship needed for remote roles."
+  remote_policy: "100% remote required. Hybrid acceptable only if optional and in Medellín."
+  markets: "Open to any market globally (US, EU, LATAM, APAC)"
+  travel: "Remote with occasional travel is a plus"
+
+languages:
+  - language: "Spanish"
+    level: "Native"
+  - language: "English"
+    level: "Fluent"
+  - language: "French"
+    level: "B1"
