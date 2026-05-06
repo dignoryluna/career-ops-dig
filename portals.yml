@@ -287,8 +287,8 @@ tracked_companies:
     careers_url: https://jobs.ashbyhq.com/harvey
     scan_method: websearch
     scan_query: 'site:jobs.ashbyhq.com/harvey "Operations" OR "Chief of Staff" OR "Project Manager"'
-    notes: "AI for legal. High-growth, async-friendly startup."
-    enabled: true
+    notes: "AI for legal. High-pressure culture matching BigLaw clients — not a fit for growth/fun-oriented early-career."
+    enabled: false
 
   # -- Remote work / global ops platforms (LATAM-friendly) --
 
