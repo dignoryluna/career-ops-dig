@@ -371,3 +371,91 @@ tracked_companies:
     notes: "All-remote handbook company. Strong ops and CoS hiring. LATAM-friendly."
     enabled: true
 
+  # -- LATAM companies --
+
+  - name: Platzi
+    careers_url: https://jobs.ashbyhq.com/platzi
+    notes: "Colombian EdTech. Remote-first, great culture, LATAM-native. Perfect fit."
+    enabled: true
+
+  - name: Nubank
+    careers_url: https://job-boards.greenhouse.io/nubank
+    notes: "Brazil fintech unicorn. Genuinely great culture, hires ops across LATAM. UTC-3 (7h overlap)."
+    enabled: true
+
+  - name: Buk
+    careers_url: https://job-boards.greenhouse.io/buk
+    notes: "Chile HR software for LATAM. Remote-friendly, startup energy. UTC-4 (9h overlap)."
+    enabled: true
+
+  - name: Konfío
+    careers_url: https://job-boards.greenhouse.io/konfio
+    notes: "Mexico SMB fintech. Growing ops team. UTC-6 (full overlap)."
+    enabled: true
+
+  # -- UK companies (UTC+0, 5h overlap) --
+
+  - name: Wise
+    careers_url: https://job-boards.greenhouse.io/wise
+    notes: "Money transfers. Remote-friendly, strong ops org, great culture. UK/global."
+    enabled: true
+
+  - name: Monzo
+    careers_url: https://job-boards.greenhouse.io/monzo
+    notes: "UK challenger bank. Excellent culture, strong ops team, fast-growing."
+    enabled: true
+
+  - name: Synthesia
+    careers_url: https://jobs.ashbyhq.com/synthesia
+    notes: "AI video startup, London. Cool product, small team, async-friendly."
+    enabled: true
+
+  # -- Western Europe (UTC+1, 4h overlap in winter) --
+
+  - name: Pleo
+    careers_url: https://jobs.ashbyhq.com/pleo
+    notes: "Copenhagen expense management startup. Excellent culture, fast-growing, ops-heavy."
+    enabled: true
+
+  - name: Pitch
+    careers_url: https://jobs.ashbyhq.com/pitch
+    notes: "Berlin presentation tool. Small tight team, strong design culture, async-friendly."
+    enabled: true
+
+  - name: Factorial
+    careers_url: https://jobs.ashbyhq.com/factorial
+    notes: "Barcelona HR software for SMBs. Ops-heavy, startup energy."
+    enabled: true
+
+  - name: Personio
+    careers_url: https://job-boards.greenhouse.io/personio
+    notes: "Munich HR platform, Series E. Lots of ops and program roles, still startup feel."
+    enabled: true
+
+  - name: Mistral
+    careers_url: https://jobs.ashbyhq.com/mistral
+    notes: "Paris AI startup. Exciting mission, small team, frontier model company."
+    enabled: true
+
+  - name: Hugging Face
+    careers_url: https://job-boards.greenhouse.io/huggingface
+    notes: "Paris/US AI platform. Remote-first, strong async culture, ops and program roles."
+    enabled: true
+
+  - name: Slite
+    careers_url: https://jobs.lever.co/slite
+    notes: "Paris async docs startup. Very small team, remote-first, great for early-career growth."
+    enabled: true
+
+  # -- Canada (UTC-5 to UTC-8, full overlap) --
+
+  - name: 1Password
+    careers_url: https://job-boards.greenhouse.io/1password
+    notes: "Canada security startup. Strong async culture, remote-first, ops and program roles."
+    enabled: true
+
+  - name: Shopify
+    careers_url: https://job-boards.greenhouse.io/shopify
+    notes: "Canada ecommerce. Large but genuine async culture, lots of ops/CoS roles."
+    enabled: true
+
