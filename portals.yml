@@ -98,6 +98,10 @@ title_filter:
     - "Oracle EBS"
     - "Mainframe"
     - "COBOL"
+    - "Senior"
+    - "Sr."
+    - "Staff "
+    - "Principal"
   seniority_boost:
     # These prefixes add relevance but are not required
     - "Senior"
