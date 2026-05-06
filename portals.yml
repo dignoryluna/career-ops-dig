@@ -280,8 +280,8 @@ tracked_companies:
     careers_url: https://jobs.ashbyhq.com/perplexity
     scan_method: websearch
     scan_query: 'site:jobs.ashbyhq.com/perplexity "Operations" OR "Chief of Staff" OR "Program Manager"'
-    notes: "AI search. Fast-growing. Ops roles at scale."
-    enabled: true
+    notes: "AI search. Hyper-competitive pressure-cooker culture — not a fit for early-career growth."
+    enabled: false
 
   - name: Harvey
     careers_url: https://jobs.ashbyhq.com/harvey
@@ -307,14 +307,14 @@ tracked_companies:
   - name: Rippling
     careers_url: https://job-boards.greenhouse.io/rippling
     api: https://boards-api.greenhouse.io/v1/boards/rippling/jobs
-    notes: "HR/ops platform. Fast-growing. BizOps and ops roles."
-    enabled: true
+    notes: "HR/ops platform. Stripe-level intensity — not a culture fit for growth/fun-oriented early-career."
+    enabled: false
 
   - name: Lattice
     careers_url: https://job-boards.greenhouse.io/lattice
     api: https://boards-api.greenhouse.io/v1/boards/lattice/jobs
-    notes: "People ops platform. Remote-friendly. Hires ops and CoS roles."
-    enabled: true
+    notes: "People ops platform. Grown into mid-size corporate SaaS — lacks startup energy."
+    enabled: false
 
   # -- Async collab / productivity tools --
 
