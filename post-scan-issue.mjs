@@ -25,7 +25,12 @@ for await (const line of rl) lines.push(line);
 
 const matches = lines
   .filter(l => l.startsWith('  + '))
-  .map(l => '- ' + l.slice(4).trim());
+  .map(l => {
+    const parts = l.slice(4).trim().split(' | ');
+    const [url, company, title, location] = parts;
+    const label = [company, title, location].filter(Boolean).join(' | ');
+    return url?.startsWith('http') ? `- [${label}](${url})` : `- ${label}`;
+  });
 
 if (matches.length === 0) {
   console.log('No new matches — skipping issue.');
