@@ -280,7 +280,14 @@ async function main() {
   console.log(`Scanning ${targets.length} companies via API (${skippedCount} skipped — no API detected)`);
   if (dryRun) console.log('(dry run — no files will be written)\n');
 
-  // 3. Load dedup sets
+  // 3. Build location filter
+  const requireRemote = config.location_filter?.require_remote === true;
+  const locationFilter = (location) => {
+    if (!requireRemote) return true;
+    return (location || '').toLowerCase().includes('remote');
+  };
+
+  // 4. Load dedup sets
   const seenUrls = loadSeenUrls();
   const seenCompanyRoles = loadSeenCompanyRoles();
 
@@ -300,7 +307,7 @@ async function main() {
       totalFound += jobs.length;
 
       for (const job of jobs) {
-        if (!titleFilter(job.title)) {
+        if (!titleFilter(job.title) || !locationFilter(job.location)) {
           totalFiltered++;
           continue;
         }

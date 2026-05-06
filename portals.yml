@@ -62,6 +62,13 @@ title_filter:
   negative:
     - "Junior"
     - "Intern"
+    - "Fellowship"
+    - "Fellows Program"
+    - "Residency"
+    - "Research Scientist"
+    - "Research Engineer"
+    - "ML Systems"
+    - "Machine Learning"
     - "On-site"
     - "On site"
     - "In-office"
@@ -99,6 +106,12 @@ title_filter:
     - "Lead"
     - "Head"
     - "Director"
+
+location_filter:
+  # Only include jobs that mention "Remote" in the location field.
+  # Catches "Remote", "Remote, US", "Remote — Worldwide", etc.
+  # Set to false to disable and receive all locations.
+  require_remote: true
 
 # -- Search queries --
 # Each query triggers a WebSearch. Use site: to filter by portal.
