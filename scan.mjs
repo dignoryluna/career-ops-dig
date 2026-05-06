@@ -284,7 +284,33 @@ async function main() {
   const requireRemote = config.location_filter?.require_remote === true;
   const locationFilter = (location) => {
     if (!requireRemote) return true;
-    return (location || '').toLowerCase().includes('remote');
+    const loc = (location || '').toLowerCase();
+    if (!loc.includes('remote')) return false;
+
+    // Unrestricted remote — no country/region mentioned
+    const GLOBAL = ['worldwide', 'global', 'anywhere'];
+    if (GLOBAL.some(p => loc.includes(p))) return true;
+
+    // Regions that include Colombia
+    const COLOMBIA_OK = ['colombia', 'latam', 'latin america', 'south america'];
+
+    // Regions that explicitly exclude Colombia
+    const RESTRICTED_PHRASES = [
+      'united states', 'united kingdom', 'europe', 'emea', 'apac', 'asia',
+      'australia', 'canada', 'germany', 'france', 'ireland', 'netherlands',
+      'spain', 'portugal', 'poland', 'sweden', 'denmark', 'finland', 'norway',
+      'austria', 'switzerland', 'belgium', 'us only', 'usa', 'noram',
+      'north america', 'united arab emirates', 'singapore', 'india', 'israel',
+      'new zealand', 'japan', 'bangalore',
+    ];
+    // Short codes need word boundaries to avoid false matches (e.g. "us" inside "focus")
+    const RESTRICTED_CODES = /\b(uk|us)\b/;
+
+    const hasRestriction = RESTRICTED_PHRASES.some(r => loc.includes(r)) || RESTRICTED_CODES.test(loc);
+    if (!hasRestriction) return true; // e.g. plain "Remote"
+
+    // Restricted but Colombia/LATAM is explicitly included
+    return COLOMBIA_OK.some(r => loc.includes(r));
   };
 
   // 4. Load dedup sets
