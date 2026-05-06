@@ -69,6 +69,12 @@ function detectApi(company) {
     };
   }
 
+  // Workable
+  const workableMatch = url.match(/apply\.workable\.com\/([^/?#]+)/);
+  if (workableMatch) {
+    return { type: 'workable', slug: workableMatch[1] };
+  }
+
   return null;
 }
 
@@ -102,6 +108,26 @@ function parseLever(json, companyName) {
     company: companyName,
     location: j.categories?.location || '',
   }));
+}
+
+function parseWorkable(json, companyName, slug) {
+  const jobs = json.results || [];
+  return jobs.map(j => {
+    const countries = (j.locations || []).map(l => l.country).filter(Boolean);
+    const isRemote = j.workplace === 'remote' || j.remote === true;
+    let location = '';
+    if (isRemote) {
+      location = countries.length > 0 ? `Remote - ${[...new Set(countries)].join(', ')}` : 'Remote';
+    } else if (j.location?.city) {
+      location = `${j.location.city}, ${j.location.country || ''}`.trim();
+    }
+    return {
+      title: j.title || '',
+      url: `https://apply.workable.com/${slug}/j/${j.shortcode}/`,
+      company: companyName,
+      location,
+    };
+  });
 }
 
 const PARSERS = { greenhouse: parseGreenhouse, ashby: parseAshby, lever: parseLever };
@@ -326,10 +352,27 @@ async function main() {
   const errors = [];
 
   const tasks = targets.map(company => async () => {
-    const { type, url } = company._api;
+    const { type, url, slug } = company._api;
     try {
-      const json = await fetchJson(url);
-      const jobs = PARSERS[type](json, company.name);
+      let json;
+      if (type === 'workable') {
+        const controller = new AbortController();
+        const t = setTimeout(() => controller.abort(), 10000);
+        const res = await fetch(`https://apply.workable.com/api/v3/accounts/${slug}/jobs`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Origin': 'https://apply.workable.com' },
+          body: '{}',
+          signal: controller.signal,
+        });
+        clearTimeout(t);
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        json = await res.json();
+      } else {
+        json = await fetchJson(url);
+      }
+      const jobs = type === 'workable'
+        ? parseWorkable(json, company.name, slug)
+        : PARSERS[type](json, company.name);
       totalFound += jobs.length;
 
       for (const job of jobs) {
